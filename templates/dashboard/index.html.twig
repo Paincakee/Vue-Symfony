@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
+{% block content %}
 
-    <div {{ vue_component('dashboard/Hello', { 'name': 'Richard' }) }}></div>
+    <div {{ vue_component('dashboard/App', { 'user': user }) }}></div>
 
 {% endblock %}
