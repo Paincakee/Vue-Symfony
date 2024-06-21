@@ -1,0 +1,5 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <div {{ vue_component('Quiz-chooser', { 'quizzes': quizzes}) }}></div>
+{% endblock %}

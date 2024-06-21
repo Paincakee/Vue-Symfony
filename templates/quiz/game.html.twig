@@ -1,0 +1,6 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <div {{ vue_component('Quiz-game', {'quiz': quiz, 'currentUser': currentUser}) }}></div>
+{#    <div {{ vue_component('Chat', {'user': app.user.username}) }}></div>#}
+{% endblock %}

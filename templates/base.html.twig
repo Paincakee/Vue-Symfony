@@ -1,49 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>{% block title %}Welcome!{% endblock %}</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-    {% block stylesheets %}
-        {{ encore_entry_link_tags('app') }}
-    {% endblock %}
+    <title>{% block title %}My Symfony App{% endblock %}</title>
+    {{ encore_entry_link_tags('app') }}
+    {{ encore_entry_script_tags('app') }}
 
-    {% block javascripts %}
-        {{ encore_entry_script_tags('app') }}
-    {% endblock %}
 </head>
 <body>
-{% block body %}
-{#    <nav class="navbar navbar-dark bg-dark p-3 shadow navbar-expand-sm">#}
-{#        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapse-navbar" aria-controls="collapse-navbar" aria-expanded="false" aria-label="Toggle Navbar">#}
-{#            <span class="navbar-toggler-icon"></span>#}
-{#        </button>#}
-{#        <div class="collapse navbar-collapse" id="collapse-navbar">#}
-{#            <div class="container-fluid d-flex justify-content-between navbar-nav">#}
-{#                <div class="navbar-brand ms-3"><i class="bi bi-{{ icon }} me-2"></i> {{ title }}</div>#}
-{#                <form class="d-flex">#}
-{#                    <input type="search" class="form-control me-2" placeholder="Search" aria-label="Search">#}
-{#                    <button class="btn btn-outline-light" type="submit">Search</button>#}
-{#                </form>#}
-{#            </div>#}
-{#        </div>#}
-{#    </nav>#}
-{#    <div class="d-flex wrapper">#}
-{#        <div class="d-flex bg-dark side-bar flex-column p-3 text-white">#}
-
-{#            <ul class="nav nav-pills flex-column mb-auto">#}
-{#                <li class="nav-item">#}
-{#                    <a href="{{ path('app_dashboard') }}" class="nav-link text-white"><i class="bi bi-speedometer2 me-2"></i> Dashboard </a>#}
-{#                </li>#}
-{#            </ul>#}
-{#            <hr>#}
-
-{#        </div>#}
-        <div class="content">
-            {% block content %} {% endblock %}
-        </div>
-    </div>
-{% endblock %}
-
+{% block content %}{% endblock %}
 </body>
 </html>
