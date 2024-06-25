@@ -1,2 +1,14 @@
 
 @import "~bootstrap/scss/bootstrap";
+
+body {
+  background: rgb(2,17,70);
+  background: linear-gradient(156deg, rgba(2,17,70,1) 0%, rgba(5,31,122,1) 100%);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  margin: 0;
+  color: white;
+}
