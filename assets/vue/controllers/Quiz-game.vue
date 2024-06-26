@@ -2,7 +2,7 @@
     <div class="game-container d-flex align-items-center flex-column">
         <div class="header mt-4">
             <div class="title-wrapper d-flex justify-content-between">
-                <h1 class="m-0 fs-3">{{quiz.title}} - {{player.score}}</h1>
+                <h1 class="m-0 fs-3">{{quiz.title}} - {{player.score}} - {{gameOver}}</h1>
                 <h1 class="m-0 fs-3">{{questionIndex + 1}} of {{ quiz.questions.length }}</h1>
             </div>
             <div class="progress mt-1">
@@ -37,9 +37,9 @@
                 </button>
             </div>
         </div>
-        <p v-else class="kahoot-message">No questions available</p>
+        <p v-else-if="gameOver" class="kahoot-message">No questions available</p>
         <div class="admin-group">
-            <button @click="nextQuestion" v-if="player.admin" class="kahoot-button">Next Question</button>
+            <button @click="nextQuestion" v-if="player.admin && !gameOver" class="kahoot-button">Next Question</button>
             <button @click="resetData" v-if="player.admin" class="kahoot-button">Reset Data</button>
         </div>
     </div>
@@ -126,6 +126,7 @@ export default {
             localStorage.setItem("questionIndex", this.questionIndex);
             localStorage.setItem("playerScore", this.player.score);
             localStorage.setItem("clickable", this.clickable);
+            localStorage.setItem("gameOver", this.gameOver);
         },
         nextQuestion() {
             if (this.questionIndex < this.quiz.questions.length - 1) {
