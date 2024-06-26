@@ -29,6 +29,13 @@ io.on('connection', (socket) => {
     socket.on('next-question', (index) => {
         index++;
         console.log('Question index:', index);
+        for (const username in users) {
+            if (users.hasOwnProperty(username)) {
+                console.log('removing: ', users[username].answer)
+                delete users[username].answer;
+            }
+        }
+
         io.emit('next-question', index);
     });
 
@@ -45,6 +52,12 @@ io.on('connection', (socket) => {
     })
 
     socket.on('clear-data', () => {
+        for (const username in users) {
+            if (users.hasOwnProperty(username)) {
+                console.log('removing: ', users[username].answer)
+                delete users[username].answer;
+            }
+        }
         io.emit('clear-data')
     })
 
