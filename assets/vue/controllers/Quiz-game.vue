@@ -1,11 +1,11 @@
 <template>
     <div class="game-container d-flex align-items-center flex-column">
-        <div class="header mt-4">
-            <div class="title-wrapper d-flex justify-content-between">
-                <h1 class="m-0 fs-3">{{quiz.title}} - {{player.score}} - {{gameOver}}</h1>
+        <div class="header mt-4 d-flex flex-column align-items-center">
+            <div class="title-wrapper d-flex justify-content-between w-100">
+                <h1 class="m-0 fs-3">{{quiz.title}}</h1>
                 <h1 class="m-0 fs-3">{{questionIndex + 1}} of {{ quiz.questions.length }}</h1>
             </div>
-            <div class="progress mt-1">
+            <div class="progress mt-1 w-100">
                 <div class="progress-bar"
                      role="progressbar"
                      :aria-valuenow="getProgressPercentage()"
@@ -16,12 +16,12 @@
                     {{ getProgressPercentage() }}%
                 </div>
             </div>
-            <img :src="image" alt="" class="game-image mt-1"/>
+            <img :src="imageSource" alt="" class="game-image mt-1" @error="handleImageError"/>
         </div>
         <div v-if="!gameOver && quiz.questions && questionIndex < quiz.questions.length" class="mt-2 wrapper">
             <div class="game-question d-flex align-items-center">
                 <div class="game-index d-flex align-items-center justify-content-center me-2">
-                    <span class="fs-2">{{questionIndex + 1}}</span>
+                    <span class="fs-3">{{questionIndex + 1}}</span>
                 </div>
                 <h3 class="m-0">{{ quiz.questions[questionIndex].question }}</h3>
             </div>
@@ -48,7 +48,6 @@
 <script>
 import { io } from "socket.io-client";
 import axios from "axios";
-import encoreImage from '../../images/encore.jpg';
 
 export default {
     props: {
@@ -73,8 +72,17 @@ export default {
             clickable: true,
             socket: null,
             activeAnswerId: null,
-            image: encoreImage,
+            imagePath: '',
+            fallbackImagePath: '/images/fallback.jpg',
         };
+    },
+    watch: {
+        questionIndex: {
+            immediate: true,
+            handler(newIndex) {
+                this.loadImage(newIndex);
+            }
+        }
     },
     created() {
         this.initializeSocket();
@@ -82,6 +90,11 @@ export default {
     mounted() {
         this.loadFromLocalStorage();
         this.checkAdminRole();
+    },
+    computed: {
+        imageSource() {
+            return this.imagePath || this.fallbackImagePath;
+        }
     },
     methods: {
         initializeSocket() {
@@ -92,6 +105,18 @@ export default {
             this.socket.on("next-question", this.handleNextQuestion);
             this.socket.on("end-game", this.handleEndGame);
             this.socket.on("clear-data", this.clearLocalData);
+        },
+        loadImage(index) {
+            // Assuming the image path is just the filename
+            const imageFile = this.quiz.questions[index]?.imagePath;
+            if (imageFile) {
+                this.imagePath = `/images/${imageFile}`;
+            } else {
+                this.imagePath = this.fallbackImagePath;
+            }
+        },
+        handleImageError() {
+            this.imagePath = this.fallbackImagePath;
         },
         loadFromLocalStorage() {
             const storedQuestionIndex = localStorage.getItem("questionIndex");
@@ -200,8 +225,9 @@ export default {
 }
 .game-image {
     border: 1px solid white;
-    width: 100%;
-    height: 200px;
+    max-height: 50vh;
+    width: auto;
+    max-width: 100%;
 }
 .game-index {
     display: flex;
@@ -224,9 +250,9 @@ export default {
     background: transparent;
     border: 2px solid rgba(168, 14, 222, 1);
     color: white;
-    margin: 10px 0;
+    margin: 2px 0;
     border-radius: 20px;
-    padding: 10px;
+    padding: 5px;
     cursor: pointer; /* Ensure buttons are clickable */
 }
 .game-answer h2 {
@@ -241,7 +267,7 @@ export default {
 }
 .admin-group {
     width: 75%;
-    margin-top: 25px;
+    margin-top: 10px;
     display: flex;
     justify-content: space-between;
 }

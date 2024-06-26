@@ -32,6 +32,10 @@ class Question
     #[ORM\OneToMany(targetEntity: Answer::class, mappedBy: 'question', orphanRemoval: true)]
     private Collection $answers;
 
+    #[Groups(["quiz-game"])]
+    #[ORM\Column(length: 255)]
+    private ?string $imagePath = null;
+
     public function __construct()
     {
         $this->answers = new ArrayCollection();
@@ -99,5 +103,17 @@ class Question
     public function __toString(): string
     {
         return $this->question . ' - ' . $this->quiz->getTitle();
+    }
+
+    public function getImagePath(): ?string
+    {
+        return $this->imagePath ?? 'fallback.jpg';
+    }
+
+    public function setImagePath(string $imagePath): static
+    {
+        $this->imagePath = $imagePath;
+
+        return $this;
     }
 }
