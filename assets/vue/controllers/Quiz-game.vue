@@ -39,8 +39,8 @@
         </div>
         <p v-else-if="gameOver" class="kahoot-message">No questions available</p>
         <div class="admin-group">
-            <button @click="nextQuestion" v-if="player.admin && !gameOver" class="kahoot-button">Next Question</button>
-            <button @click="resetData" v-if="player.admin" class="kahoot-button">Reset Data</button>
+            <button @click="nextQuestion" v-if="player.admin && !gameOver" class="kahoot-button">Next</button>
+            <button @click="resetData" v-if="player.admin" class="kahoot-button">Reset</button>
         </div>
     </div>
 </template>
@@ -278,7 +278,6 @@ export default {
     color: white;
     background: transparent;
     border-radius: 15px;
-    padding: 5px;
 }
 .answer-grid button:hover {
     cursor: pointer;
